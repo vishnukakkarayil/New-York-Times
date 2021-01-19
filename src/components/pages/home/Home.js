@@ -4,9 +4,11 @@ import MostPopularArticle from './MostPopularArticle'
 
 const Home = () => {
     return (
+        <>
         <Container maxWidth="lg">
             <MostPopularArticle />
         </Container>
+        </>
     );
 };
 

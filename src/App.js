@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import Home from './components/home/Home'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './components/pages/home/Home'
+import Article from './components/pages/article/Article'
+import MenuAppBar from './components/common/Banner'
 function App() {
-useEffect(() =>{ axios.get('https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=y0pGKNASy3k8cP39dmvdwjPGaPG8dLhk')
-.then(data => console.log(data.data))
-.catch(err=>{ alert(err) })
-},[])
   return (
     <div className="App">
-      <Home />
+      
+    <Router>
+      <Switch>
+      {/* <MenuAppBar /> */}
+        <Route exact path="/" component={() => <Home />} />
+        <Route exact path="/article:id" component={() => <Article />} />
+      </Switch>
+    </Router>
     </div>
   );
 }
