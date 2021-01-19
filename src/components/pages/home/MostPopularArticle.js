@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     }));
 
 const MostPopularArticle = () => {
+  const [copyArticle, setCopyArticle] = useState([])
     let imgLength = 0  
     let articleLength = 0
     const dispatch = useDispatch()
@@ -57,16 +58,28 @@ const MostPopularArticle = () => {
     },[])
 
     let articles = useSelector(state => state.articleList.data)
-    // console.log(articles)
+    
+    
     
     const search = (e) => {
-      // const checkFrom = articles
-      let val = e.target.value
-      // const re = new RegExp(_.escapeRegExp(val), 'i')
-      // const isMatch = (checkFrom) => re.test(checkFrom.abstract)
-      // const results = _.filter(checkFrom, isMatch)
-      dispatch(ListAction(val))
       
+      let val = e.target.value
+      const re = new RegExp(_.escapeRegExp(val), 'i')
+      const checkFrom = articles
+      const isMatch = (checkFrom) => re.test(checkFrom.abstract)
+      const results = _.filter(checkFrom, isMatch)
+      
+      // val === undefined ? results = articles : results
+      setItem(results)
+      
+      // console.log(results)
+      // dispatch(ListAction(val))
+      
+    }
+    const setItem = results =>{ 
+      setCopyArticle({...copyArticle, results })
+      // articles = results
+      console.log(copyArticle.results)
     }
 
     // const search = (e) => {
@@ -81,7 +94,11 @@ const MostPopularArticle = () => {
 
     return (
         <div>
-          <input type = "text" name="search" onChange={search}/>
+          <Grid container className="search-wrap">
+            <Grid item xs={12} sm={12} md={12} className="search-place">
+              <input type = "text" name="search" className="search-here" placeholder="Search" onChange={search}/>
+            </Grid>
+          </Grid>
           {/* <SearchAppBar search ={ search }/> */}
             <Grid container spacing={3}>
               { articles !== undefined ?

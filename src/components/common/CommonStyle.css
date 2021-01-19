@@ -1,0 +1,36 @@
+.MuiGrid-root.banner-wrap.MuiGrid-container {
+    height: 40vh;
+    position: relative;
+    margin-bottom: 2rem;
+}
+.MuiGrid-root.banner-wrap.MuiGrid-container:after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    background: #c70000;
+    bottom: 0;
+}
+h1.MuiTypography-root.banner-title.MuiTypography-h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 40vh;
+    font-weight: 700;
+    font-family: auto;
+}
+
+.MuiGrid-root.header-wrap.MuiGrid-container {
+    background: #0e0250;
+}
+p.MuiTypography-root.MuiTypography-body1 {
+    margin: 0 5em;
+}
+a.menu-items {
+    color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    text-decoration: none;
+}

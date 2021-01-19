@@ -1,3 +1,16 @@
 .MuiPaper-root.MuiCard-root.MuiPaper-elevation1.MuiPaper-rounded {
     height: 461px;
 }
+.MuiGrid-root.search-wrap.MuiGrid-container {
+    padding: 7px 12px;
+    background: #f7f7f7;
+}
+.MuiGrid-root.search-place.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-12.MuiGrid-grid-md-12 {
+    display: flex;
+    justify-content: flex-end;
+}
+input.search-here {
+    border: solid 1px #c5c5c5;
+    height: 25px;
+    border-radius: 3px;
+}

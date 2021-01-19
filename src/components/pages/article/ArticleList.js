@@ -17,8 +17,6 @@ import './ArticleStyle.css'
 const ArticleList = ({articleId}) => {
     let imgCount
     const singleArticleId = articleId
-    // let articlesDAta = 0
-    // let articlesDAtas
     const dispatch = useDispatch()
     useEffect(()=>{ dispatch(ListAction()) },[])
 
@@ -27,7 +25,7 @@ const ArticleList = ({articleId}) => {
     return (
         <Grid container spacing={3}>
             {
-                singleArticles != undefined ?
+            singleArticles != undefined ?
             singleArticles.filter(filteredItem => filteredItem.id === singleArticleId)
             .map((filteredItem,index) => {
             return(
@@ -81,8 +79,6 @@ const ArticleList = ({articleId}) => {
             <Grid item xs={12} sm={3} md={3}>
                 Sidebar
             </Grid>
-
-
         </Grid>
     );
 };
