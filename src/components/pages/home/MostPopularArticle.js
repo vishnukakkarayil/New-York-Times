@@ -68,29 +68,9 @@ const MostPopularArticle = () => {
       const checkFrom = articles
       const isMatch = (checkFrom) => re.test(checkFrom.abstract)
       const results = _.filter(checkFrom, isMatch)
-      
-      // val === undefined ? results = articles : results
-      setItem(results)
-      
       // console.log(results)
-      // dispatch(ListAction(val))
       
     }
-    const setItem = results =>{ 
-      setCopyArticle({...copyArticle, results })
-      // articles = results
-      console.log(copyArticle.results)
-    }
-
-    // const search = (e) => {
-    //   const checkFrom = articles
-    //   let val = e.target.value
-    //   const re = new RegExp(_.escapeRegExp(val), 'i')
-    //   const isMatch = (checkFrom) => re.test(checkFrom.abstract)
-    //   const results = _.filter(checkFrom, isMatch)
-    //   dispatch(setResults(results))
-      
-    // }
 
     return (
         <div>
