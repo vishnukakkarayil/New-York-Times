@@ -3,6 +3,7 @@
 }
 .MuiGrid-root.search-wrap.MuiGrid-container {
     padding: 7px 12px;
+    margin-bottom: 15px;
     background: #f7f7f7;
 }
 .MuiGrid-root.search-place.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-12.MuiGrid-grid-md-12 {

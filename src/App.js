@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './components/pages/home/Home'
 import Article from './components/pages/article/Article'
 import Header from './components/common/Header'
@@ -9,13 +9,11 @@ function App() {
     <div className="App">
     
     <Router>
-      {/* <Switch> */}
         <Header />
         <Banner />
       
         <Route exact path="/" component={() => <Home />} />
-        <Route exact path="/article" component={() => <Article />} />
-      {/* </Switch> */}
+        <Route exact path="/article/:id" render={ props => <Article {...props} />}  />
     </Router>
     </div>
   );

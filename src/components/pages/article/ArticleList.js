@@ -1,32 +1,26 @@
 import React, { useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Image from 'material-ui-image';
 import { ListAction } from '../../redux/actions'
 import './ArticleStyle.css'
 
-const ArticleList = ({articleId}) => {
-    let imgCount
-    const singleArticleId = articleId
+const ArticleList = () => {
+    let history = useHistory();
+    const params = useParams();
+    const singleArticleId = params.id
     const dispatch = useDispatch()
     useEffect(()=>{ dispatch(ListAction()) },[])
 
     let singleArticles = useSelector(state => state.articleList.data)
-    console.log(singleArticles)
     return (
         <Grid container spacing={3}>
             {
-            singleArticles != undefined ?
-            singleArticles.filter(filteredItem => filteredItem.id === singleArticleId)
+            singleArticles !== undefined && singleArticleId !== undefined?
+            singleArticles.filter(filteredItem => filteredItem.id == singleArticleId)
             .map((filteredItem,index) => {
             return(
 
@@ -40,38 +34,40 @@ const ArticleList = ({articleId}) => {
                 </Typography>
 
                 <Grid container spacing={3} className="article-hd">
-                    <Grid item sm={3} md={3}>
+                    <Grid item sm={3} md={3} className="article-hd-data-wrap">
                         <Typography variant="body2" className="article-hd-data" color="textSecondary" component="p" style={{display: "inline-block", padding:"10px"}}>
                             {filteredItem.source}
                         </Typography>
                     </Grid>
-                    <Grid item sm={3} md={3}>
+                    <Grid item sm={3} md={3} className="article-hd-data-wrap">
                         <Typography variant="body2" className="article-hd-data" color="textSecondary" component="p" style={{display: "inline-block", padding:"10px"}}>
                         {"Published On : " + filteredItem.published_date}
                         </Typography>
                     </Grid>
-                    {filteredItem.subsection != '' ?
-                    <Grid item sm={3} md={3}>
+                    {filteredItem.subsection !== '' ?
+                    <Grid item sm={3} md={3} className="article-hd-data-wrap">
                         <Typography variant="body2" className="article-hd-data" color="textSecondary" component="p" style={{display: "inline-block", padding:"10px"}}>
                             {"Subsection : " + filteredItem.subsection}
                         </Typography>
                     </Grid>
                     : null }
-                    <Grid item sm={3} md={3}>
+                    <Grid item sm={3} md={3} className="article-hd-data-wrap">
                         <Typography variant="body2" className="article-hd-data" color="textSecondary" component="p" style={{display: "inline-block", padding:"10px"}}>
                             {"Type : " + filteredItem.type}
                         </Typography>
                     </Grid>
                 </Grid>
-                    { imgCount = filteredItem.media[0]['media-metadata'].length-1}
                 <CardMedia
                         className="article-img"
-                        image={filteredItem.media[0]['media-metadata'][imgCount].url}
+                        image={filteredItem.media[0]['media-metadata'][filteredItem.media[0]['media-metadata'].length-1].url}
                         title="Contemplative Reptile"
                       />
                 <Typography variant="body2" className="articleDescription" color="textSecondary" component="p">
                     {filteredItem.adx_keywords}
                 </Typography>
+                <Button onClick={() => history.goBack()} variant="outlined" color="secondary" style={{float:'right'}}>
+                    Back
+                </Button>
             </Grid>
             )} 
             ) : console.log('')

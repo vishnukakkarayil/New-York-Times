@@ -8,9 +8,3 @@ export const ListAction = () =>
         .then((res)=> dispatch({type:'LIST_ARTICLE',payload:res.data.results}))
         .catch(err=> dispatch({type:'LIST_ARTICLE',payload:err}))
 }
-
-export const setResults = (results) =>
-(dispatch,getState)=>{
-    dispatch({type:'SEARCH_RESULT', results:results})
-    
-}

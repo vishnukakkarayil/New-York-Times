@@ -48,6 +48,11 @@ p.MuiTypography-root.articleDescription.MuiTypography-body2.MuiTypography-colorT
     }
 
 }
+@media (max-width: 599px){
+.MuiGrid-root.article-hd-data-wrap.MuiGrid-item.MuiGrid-grid-sm-3.MuiGrid-grid-md-3 {
+    padding: 0 10px;
+}
+}
 @media (max-width: 454px){
     .MuiTypography-h2 {
         font-size: 2rem !important;

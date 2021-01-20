@@ -9,11 +9,11 @@ const ArticleList = (state = initialState,action) => {
                 ...state,
                 data:action.payload
             }
-            case 'SINGLE_ARTICLE':
-            return{
-                ...state,
-                data:action.payload
-            }
+            // case 'SINGLE_ARTICLE':
+            // return{
+            //     ...state,
+            //     data:action.payload
+            // }
         default:
             return state
     }

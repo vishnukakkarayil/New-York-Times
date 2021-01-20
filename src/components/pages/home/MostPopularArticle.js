@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash'
+import WOW from "wowjs";  
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-// import Link from '@material-ui/core/Link';
 import { ListAction } from '../../redux/actions'
-import SearchAppBar from '../../common/Search'
 import './HomeStyle.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -48,29 +44,33 @@ const useStyles = makeStyles((theme) => ({
     }));
 
 const MostPopularArticle = () => {
+  
   const [copyArticle, setCopyArticle] = useState([])
-    let imgLength = 0  
-    let articleLength = 0
     const dispatch = useDispatch()
     const classes = useStyles();
-    useEffect(()=>{ dispatch(ListAction())
+    useEffect(()=>{ new WOW.WOW().init()
+      dispatch(ListAction())
     
     },[])
-
-    let articles = useSelector(state => state.articleList.data)
-    
-    
+    let articles = useSelector(state => state.articleList.data)   
     
     const search = (e) => {
-      
+      e.preventDefault()
       let val = e.target.value
       const re = new RegExp(_.escapeRegExp(val), 'i')
       const checkFrom = articles
       const isMatch = (checkFrom) => re.test(checkFrom.abstract)
       const results = _.filter(checkFrom, isMatch)
-      // console.log(results)
       
+      setCopyArticle({
+        ...copyArticle,
+        results,
+      })
     }
+    let allArticle = []
+    copyArticle.results !== undefined ?
+    allArticle = copyArticle.results :
+    allArticle = articles
 
     return (
         <div>
@@ -79,26 +79,29 @@ const MostPopularArticle = () => {
               <input type = "text" name="search" className="search-here" placeholder="Search" onChange={search}/>
             </Grid>
           </Grid>
-          {/* <SearchAppBar search ={ search }/> */}
             <Grid container spacing={3}>
-              { articles !== undefined ?
-              
-              articles.map((article) => { return (
-                
-                <Grid item xs={12} sm={6} md={3} key = {article.id}>
+              { 
+              allArticle !== undefined ?
+              allArticle.length !== 0?
+             
+              allArticle.map((article,index) => { return (              
+                <Grid item xs={12} sm={6} md={3} key = {article.id} data-wow-delay="5s" className="wow animate__slideInUp">
                 <Card width="100%" height= "180">
                   <CardActionArea>
-                    <Link to={
-                      { pathname:"/article",
-                      id:article.id}
-                    }>
-                      {
-                      imgLength = articles[0].media[0]['media-metadata'].length-1
-                      /* { articles[0].media != undefined ?
-                      console.log(articles[0].media['media-metadata']) : console.log('fff')} */}
+                    
+                     <Link to={`${'/article/'+article.id}`}>
                       <CardMedia
                         className={classes.media}
-                        image={articles[articleLength].media[0]['media-metadata'][imgLength].url}
+                        image={
+                          article[index] !== undefined ?
+                          article[index].media[0] !== undefined ?
+                          article[index].media[0]['media-metadata'][article[index].media[0]['media-metadata'].length-1].url :
+                          "https://img2.pngio.com/ikmf-krav-maga-default-png-720_405.png"
+                          :
+                          article.media[0] !== undefined ?
+                          article.media[0]['media-metadata'][article.media[0]['media-metadata'].length-1].url :
+                          "https://img2.pngio.com/ikmf-krav-maga-default-png-720_405.png"
+                        }
                         title="Contemplative Reptile"
                       />
                     </Link>
@@ -119,13 +122,21 @@ const MostPopularArticle = () => {
                       </Typography>
                     </CardContent>
                     <CardContent style={{ paddingTop:'5px'}}>
+                      
                     <Typography variant="body2" color="textSecondary" component="p">
-                      {article.abstract.substr(0, 150)+'...'}
+                      { article.abstract !== "" ?  article.abstract.substr(0, 150)+'...' : "Not Updated"}
                       </Typography>
                     </CardContent>
                 </Card>
-                { articleLength++ }
-              </Grid> )} ) : null }
+              </Grid>
+              
+               )} ) : 
+               <CardContent style={{ paddingTop:'5px'}} key={1}>                      
+                <Typography variant="body2" color="textSecondary" component="p" style = {{color:"#c70000"}}>
+                  Sorry... No result found
+                </Typography>
+              </CardContent>
+               : null }
             </Grid>
             </div>
     );
